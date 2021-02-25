@@ -1,0 +1,14 @@
+{
+    "name": "dt-device-tester-core",
+    "version-string": "0.1.0",
+    "dependencies": [
+        "nlohmann-json",
+        "corrade",
+        {
+            "name": "imgui",
+            "features": [
+                
+            ]
+        }
+    ]
+}
