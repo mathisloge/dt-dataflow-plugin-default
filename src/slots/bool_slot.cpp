@@ -40,7 +40,7 @@ void BoolSlot::accept(const std::any &value)
 {
     try
     {
-        accept(std::any_cast<bool>(value));
+        accept(implicit_any_cast<bool>(value));
     }
     catch (std::bad_any_cast &)
     {

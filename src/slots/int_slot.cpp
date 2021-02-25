@@ -1,7 +1,6 @@
 #pragma once
 #include "int_slot.hpp"
 #include <imgui.h>
-
 namespace dt::df
 {
 
@@ -23,7 +22,7 @@ int IntSlot::valueInt() const
 void IntSlot::accept(int value)
 {
     value_ = value;
-    any_value_ = std::make_any<bool>(value_);
+    any_value_ = std::make_any<int>(value_);
 }
 
 void IntSlot::accept(double value)
@@ -34,7 +33,7 @@ void IntSlot::accept(const std::any &value)
 {
     try
     {
-        accept(std::any_cast<int>(value));
+        accept(implicit_any_cast<int>(value));
     }
     catch (std::bad_any_cast &)
     {

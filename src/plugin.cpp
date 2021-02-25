@@ -6,11 +6,14 @@
 #include "nodes/simple_ops.hpp"
 #include "nodes/simple_outputs.hpp"
 #include "nodes/timer_node.hpp"
+#include "nodes/color_node.hpp"
+#include "nodes/branch_node.hpp"
 #include "slots/bool_slot.hpp"
 #include "slots/floating_slot.hpp"
 #include "slots/int_slot.hpp"
 #include "slots/string_slot.hpp"
 #include "slots/trigger_slot.hpp"
+#include "slots/any_slot.hpp"
 
 namespace dt::df::plugin
 {
@@ -70,6 +73,8 @@ class DefaultPlugin final : public Plugin
 
         registerNode<TimerNode>(graph, "utilities/");
         registerNode<LedNode>(graph, "utilities/");
+        registerNode<ColorNode>(graph, "utilities/");
+        registerNode<BranchNode>(graph, "operators/logical/");
     }
     void registerSlotFactories(IGraphManager &graph)
     {
@@ -78,6 +83,7 @@ class DefaultPlugin final : public Plugin
         registerSlot<IntSlot>(graph);
         registerSlot<StringSlotImpl>(graph);
         registerSlot<TriggerSlot>(graph);
+        registerSlot<AnySlotImpl>(graph);
     }
 };
 } // namespace dt::df::plugin

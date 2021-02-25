@@ -18,6 +18,7 @@ class LedNode final : public BaseNode
     void renderCustomContent() override;
     void toggle();
     void initSlots();
+    void setColor(const BaseSlot* slot, int idx);
 
   private:
     std::atomic_bool is_on_;

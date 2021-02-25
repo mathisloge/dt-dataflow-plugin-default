@@ -1,5 +1,6 @@
 #include "led_node.hpp"
 #include <dt/df/core/graph_manager.hpp>
+#include <dt/df/core/number_slot.hpp>
 #include <dt/df/core/value_less_slot.hpp>
 namespace dt::df
 {
@@ -40,14 +41,48 @@ void LedNode::toggle()
 void LedNode::initSlots()
 {
     inputByLocalId(0)->subscribe([this](auto) { toggle(); });
+    inputByLocalId(1)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 0));
+    inputByLocalId(2)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 1));
+    inputByLocalId(3)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 2));
+    inputByLocalId(4)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 3));
+}
+
+void LedNode::setColor(const BaseSlot *slot, int idx)
+{
+    auto slot_nb = dynamic_cast<const NumberSlot *>(slot);
+    if (slot_nb)
+    {
+        const float value = static_cast<float>(slot_nb->value()) / 255.f;
+        switch (idx)
+        {
+        case 0:
+            color_.Value.x = value;
+            break;
+        case 1:
+            color_.Value.y = value;
+            break;
+        case 2:
+            color_.Value.z = value;
+            break;
+        case 3:
+            color_.Value.w = value;
+            break;
+        }
+    }
 }
 
 Slots createInputs(IGraphManager &graph_manager)
 {
     try
     {
-        return Slots{graph_manager.getSlotFactory("TriggerSlot")(
-            graph_manager, SlotType::input, "toggle", 0, SlotFieldVisibility::without_connection)};
+        const auto &trigger_slot_fac = graph_manager.getSlotFactory("TriggerSlot");
+        const auto &int_slot_fac = graph_manager.getSlotFactory("IntSlot");
+        return Slots{
+            trigger_slot_fac(graph_manager, SlotType::input, "toggle", 0, SlotFieldVisibility::without_connection),
+            int_slot_fac(graph_manager, SlotType::input, "r", 1, SlotFieldVisibility::without_connection),
+            int_slot_fac(graph_manager, SlotType::input, "g", 2, SlotFieldVisibility::without_connection),
+            int_slot_fac(graph_manager, SlotType::input, "b", 3, SlotFieldVisibility::without_connection),
+            int_slot_fac(graph_manager, SlotType::input, "a", 4, SlotFieldVisibility::without_connection)};
     }
     catch (...)
     {}
