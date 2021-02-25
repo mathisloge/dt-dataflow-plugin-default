@@ -2,6 +2,8 @@
     "name": "dt-device-tester-core",
     "version-string": "0.1.0",
     "dependencies": [
+        "boost-signals2",
+        "boost-asio",
         "nlohmann-json",
         "corrade",
         {

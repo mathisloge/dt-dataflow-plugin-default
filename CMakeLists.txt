@@ -6,6 +6,9 @@ find_package(Corrade REQUIRED PluginManager)
 
 add_subdirectory(dt-dataflow)
 
+set(DTDF_PLUGIN_INSTALL_DBG_DIR "${CMAKE_INSTALL_PREFIX}/bin/dataflow/dbg")
+set(DTDF_PLUGIN_INSTALL_REL_DIR "${CMAKE_INSTALL_PREFIX}/bin/dataflow/rel")
+
 set(SOURCES         
     src/plugin.cpp
     src/slots/bool_slot.cpp
