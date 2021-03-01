@@ -3,6 +3,7 @@ project(DtDfPluginDefault)
 
 find_package(imgui CONFIG REQUIRED)
 find_package(Corrade REQUIRED PluginManager)
+find_package(Magnum REQUIRED GL)
 
 add_subdirectory(dt-dataflow)
 
@@ -46,6 +47,8 @@ target_link_libraries(DefaultPlugin PRIVATE
     imgui::imgui
     imgui::imnodes
     Corrade::PluginManager
+    Magnum::Magnum
+    Magnum::GL
     dt::DtDataflowCore
     dt::DtDataflowPlugin
 )

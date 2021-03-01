@@ -1,19 +1,20 @@
 #include <Corrade/PluginManager/AbstractManager.h>
+#include <Magnum/Platform/GLContext.h>
 #include <dt/df/plugin/plugin.hpp>
 #include <imnodes.h>
+#include "nodes/branch_node.hpp"
+#include "nodes/color_node.hpp"
 #include "nodes/led_node.hpp"
 #include "nodes/simple_cmps.hpp"
 #include "nodes/simple_ops.hpp"
 #include "nodes/simple_outputs.hpp"
 #include "nodes/timer_node.hpp"
-#include "nodes/color_node.hpp"
-#include "nodes/branch_node.hpp"
+#include "slots/any_slot.hpp"
 #include "slots/bool_slot.hpp"
 #include "slots/floating_slot.hpp"
 #include "slots/int_slot.hpp"
 #include "slots/string_slot.hpp"
 #include "slots/trigger_slot.hpp"
-#include "slots/any_slot.hpp"
 
 namespace dt::df::plugin
 {
@@ -45,8 +46,9 @@ class DefaultPlugin final : public Plugin
         : Plugin{manager, plugin}
     {}
 
-    void setup(ImGuiContext *imgui_ctx, imnodes::Context *imnodes_ctx)
+    void setup(Magnum::GL::Context &gl_ctx, ImGuiContext *imgui_ctx, imnodes::Context *imnodes_ctx)
     {
+        Magnum::Platform::GLContext::makeCurrent(&gl_ctx);
         ImGui::SetCurrentContext(imgui_ctx);
         imnodes::SetCurrentContext(imnodes_ctx);
     }
