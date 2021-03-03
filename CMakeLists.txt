@@ -4,8 +4,7 @@ project(DtDfPluginDefault)
 find_package(imgui CONFIG REQUIRED)
 find_package(Corrade REQUIRED PluginManager)
 find_package(Magnum REQUIRED GL)
-
-add_subdirectory(dt-dataflow)
+find_package(DtDataFlow CONFIG REQUIRED)
 
 set(DTDF_PLUGIN_INSTALL_DBG_DIR "${CMAKE_INSTALL_PREFIX}/bin/dataflow/dbg")
 set(DTDF_PLUGIN_INSTALL_REL_DIR "${CMAKE_INSTALL_PREFIX}/bin/dataflow/rel")
@@ -45,10 +44,10 @@ target_include_directories(
 
 target_link_libraries(DefaultPlugin PRIVATE 
     imgui::imgui
-    imgui::imnodes
     Corrade::PluginManager
     Magnum::Magnum
     Magnum::GL
+    dt::imnodes
     dt::DtDataflowCore
     dt::DtDataflowPlugin
 )
