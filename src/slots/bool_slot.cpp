@@ -7,7 +7,7 @@ namespace dt::df
 void BoolSlot::setValue(bool value)
 {
     accept(value);
-    needsReevaluation();
+    valueChanged();
 }
 
 const std::any &BoolSlot::anyValue() const

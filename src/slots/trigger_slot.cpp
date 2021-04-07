@@ -6,7 +6,7 @@ namespace dt::df
 
 void TriggerSlot::notify()
 {
-    needsReevaluation();
+    valueChanged();
 }
 
 } // namespace dt::df
