@@ -1,5 +1,6 @@
 #include "timer_node.hpp"
 #include <chrono>
+#include <cinttypes>
 #include <thread>
 #include <dt/df/core/graph_manager.hpp>
 #include <dt/df/core/value_less_slot.hpp>
@@ -47,9 +48,25 @@ void TimerNode::wakeup(const boost::system::error_code &ec)
     if (ec == boost::system::errc::operation_canceled || timer_.expiry() <= std::chrono::steady_clock::now())
     {
         if (!ec)
+        {
+            using Clock = std::chrono::high_resolution_clock;
+
+            const auto start = Clock::now();
             triggerFlow();
+            last_duration_ = std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - start);
+        }
         timer_.expires_after(delay_);
         timer_.async_wait(std::bind(&TimerNode::wakeup, this, std::placeholders::_1));
+    }
+}
+
+void TimerNode::renderCustomContent()
+{
+    if (last_duration_ > delay_)
+    {
+        ImGui::TextColored(ImColor{150.f / 255.f, 30.f / 255.f, 30.f / 255.f, 1.f},
+                           "Last calculation duration was greater then the delay: %" PRId64,
+                           last_duration_.count());
     }
 }
 

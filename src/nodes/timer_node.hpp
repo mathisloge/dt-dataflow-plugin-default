@@ -20,6 +20,7 @@ class TimerNode final : public BaseNode
     void calculate() override;
 
   private:
+    void renderCustomContent() override;
     void setDelay(std::chrono::milliseconds delay);
     void wakeup(const boost::system::error_code &);
     void ioLoop();
@@ -27,6 +28,7 @@ class TimerNode final : public BaseNode
 
   private:
     std::chrono::milliseconds delay_;
+    std::chrono::milliseconds last_duration_;
     bool run_;
     std::thread io_thread_;
     boost::asio::io_context io_ctx_;
