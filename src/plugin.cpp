@@ -15,6 +15,7 @@
 #include "slots/int_slot.hpp"
 #include "slots/string_slot.hpp"
 #include "slots/trigger_slot.hpp"
+#include <dt/df/core/calculate_slot.hpp>
 
 namespace dt::df::plugin
 {
@@ -86,6 +87,7 @@ class DefaultPlugin final : public Plugin
         registerSlot<StringSlotImpl>(graph);
         registerSlot<TriggerSlot>(graph);
         registerSlot<AnySlotImpl>(graph);
+        registerSlot<dt::df::CalculateSlot>(graph);
     }
 };
 } // namespace dt::df::plugin
