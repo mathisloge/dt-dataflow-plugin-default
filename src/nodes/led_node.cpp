@@ -20,6 +20,14 @@ LedNode::LedNode(IGraphManager &graph_manager, const nlohmann::json &json)
     initSlots();
 }
 
+void LedNode::calculate()
+{
+    setColor(inputByLocalId(1), 0);
+    setColor(inputByLocalId(2), 1);
+    setColor(inputByLocalId(3), 2);
+    setColor(inputByLocalId(4), 3);
+}
+
 void LedNode::renderCustomContent()
 {
     const ImVec2 p = ImGui::GetCursorScreenPos();
@@ -41,15 +49,11 @@ void LedNode::toggle()
 void LedNode::initSlots()
 {
     inputByLocalId(0)->subscribe([this](auto) { toggle(); });
-    inputByLocalId(1)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 0));
-    inputByLocalId(2)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 1));
-    inputByLocalId(3)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 2));
-    inputByLocalId(4)->subscribe(std::bind(&LedNode::setColor, this, std::placeholders::_1, 3));
 }
 
-void LedNode::setColor(const BaseSlot *slot, int idx)
+void LedNode::setColor(const std::shared_ptr<BaseSlot>& slot, int idx)
 {
-    auto slot_nb = dynamic_cast<const NumberSlot *>(slot);
+    auto slot_nb = std::static_pointer_cast<NumberSlot>(slot);
     if (slot_nb)
     {
         const float value = static_cast<float>(slot_nb->value()) / 255.f;

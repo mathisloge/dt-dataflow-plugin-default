@@ -4,7 +4,6 @@
 #include <boost/asio.hpp>
 #include <dt/df/core/base_node.hpp>
 #include <dt/df/core/number_slot.hpp>
-#include <dt/df/core/value_less_slot.hpp>
 namespace dt::df
 {
 class TimerNode final : public BaseNode
@@ -18,6 +17,8 @@ class TimerNode final : public BaseNode
     TimerNode(IGraphManager &graph_manager, const nlohmann::json &);
     ~TimerNode();
 
+    void calculate() override;
+
   private:
     void setDelay(std::chrono::milliseconds delay);
     void wakeup(const boost::system::error_code &);
@@ -30,7 +31,5 @@ class TimerNode final : public BaseNode
     std::thread io_thread_;
     boost::asio::io_context io_ctx_;
     boost::asio::steady_timer timer_;
-
-    std::shared_ptr<ValueLessSlot> output_;
 };
 } // namespace dt::df

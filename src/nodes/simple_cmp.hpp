@@ -17,6 +17,8 @@ class SimpleCmp : public BaseNode
     SimpleCmp(IGraphManager &graph_manager, const nlohmann::json &json);
     virtual ~SimpleCmp();
 
+    void calculate() override;
+
   protected:
     virtual bool cmp(const double a, const double b) const = 0;
 
@@ -31,4 +33,4 @@ class SimpleCmp : public BaseNode
     std::shared_ptr<TriggerSlot> true_slot_;
     std::shared_ptr<TriggerSlot> false_slot_;
 };
-} // namespace dt::df::operators
+} // namespace dt::df::cmp

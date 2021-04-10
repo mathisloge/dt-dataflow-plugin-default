@@ -23,16 +23,12 @@ void BranchNode::initSlots()
     input_if_ = std::dynamic_pointer_cast<AnySlot>(inputByLocalId(1));
     input_else_ = std::dynamic_pointer_cast<AnySlot>(inputByLocalId(2));
     input_expr_->subscribe([this](auto) { setOutput(static_cast<bool>(input_expr_->value())); });
-    input_if_->subscribe([this](auto) {
-        const bool expr = static_cast<bool>(input_expr_->value());
-        if (expr)
-            setOutput(expr);
-    });
-    input_else_->subscribe([this](auto) {
-        const bool expr = static_cast<bool>(input_expr_->value());
-        if (!expr)
-            setOutput(expr);
-    });
+}
+
+void BranchNode::calculate()
+{
+    const bool expr = static_cast<bool>(input_expr_->value());
+    setOutput(expr);
 }
 
 void BranchNode::setOutput(const bool result)
@@ -50,9 +46,12 @@ Slots createInputs(IGraphManager &graph_manager)
     {
         const auto any_slot_fac = graph_manager.getSlotFactory("AnySlot");
         const auto bool_slot_fac = graph_manager.getSlotFactory("BoolSlot");
-        slots.emplace_back(bool_slot_fac(graph_manager, SlotType::output, "expr", 0, SlotFieldVisibility::without_connection));
-        slots.emplace_back(any_slot_fac(graph_manager, SlotType::output, "if", 1, SlotFieldVisibility::without_connection));
-        slots.emplace_back(any_slot_fac(graph_manager, SlotType::output, "else", 2, SlotFieldVisibility::without_connection));
+        slots.emplace_back(
+            bool_slot_fac(graph_manager, SlotType::output, "expr", 0, SlotFieldVisibility::without_connection));
+        slots.emplace_back(
+            any_slot_fac(graph_manager, SlotType::output, "if", 1, SlotFieldVisibility::without_connection));
+        slots.emplace_back(
+            any_slot_fac(graph_manager, SlotType::output, "else", 2, SlotFieldVisibility::without_connection));
     }
     catch (...)
     {}

@@ -18,6 +18,7 @@ class BranchNode final : public BaseNode
 
   private:
     void initSlots();
+    void calculate() override;
     void setOutput(const bool result);
 
   private:

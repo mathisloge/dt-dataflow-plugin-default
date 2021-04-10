@@ -1,5 +1,6 @@
 #pragma once
 #include <dt/df/core/base_node.hpp>
+#include <dt/df/core/base_slot.hpp>
 #include <dt/df/core/graph_manager.hpp>
 #include "simple_output_builder.hpp"
 

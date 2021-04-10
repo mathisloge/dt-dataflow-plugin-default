@@ -48,7 +48,7 @@ void SimpleCmp::initSlots()
         if (in_slot)
         {
             in_a_ = in_slot->value();
-            setResult(cmp(in_a_, in_b_));
+            calculateIfNoFlow();
         }
     });
     inputByLocalId(1)->subscribe([this](const BaseSlot *slot) {
@@ -56,9 +56,14 @@ void SimpleCmp::initSlots()
         if (in_slot)
         {
             in_b_ = in_slot->value();
-            setResult(cmp(in_a_, in_b_));
+            calculateIfNoFlow();
         }
     });
+}
+
+void SimpleCmp::calculate()
+{
+    setResult(cmp(in_a_, in_b_));
 }
 
 void SimpleCmp::setResult(const bool res)
@@ -73,4 +78,4 @@ void SimpleCmp::setResult(const bool res)
 
 SimpleCmp::~SimpleCmp()
 {}
-} // namespace dt::df::operators
+} // namespace dt::df::cmp

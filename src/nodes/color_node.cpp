@@ -22,9 +22,14 @@ void ColorNode::renderCustomContent()
     ImGui::SetNextItemWidth(250.f);
     if (ImGui::ColorEdit4("color", &color_[0], ImGuiColorEditFlags__OptionsDefault))
     {
-        pushColors();
+        calculateIfNoFlow();
     }
     ImGui::PopID();
+}
+
+void ColorNode::calculate()
+{
+    pushColors();
 }
 
 void ColorNode::initSlots()

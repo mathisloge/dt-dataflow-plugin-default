@@ -45,6 +45,7 @@ void SimpleOp::initSlots()
         {
             in_a_ = in_slot->value();
             setResult(calc(in_a_, in_b_));
+            calculateIfNoFlow();
         }
     });
     inputByLocalId(1)->subscribe([this](const BaseSlot *slot) {
@@ -52,9 +53,14 @@ void SimpleOp::initSlots()
         if (in_slot)
         {
             in_b_ = in_slot->value();
-            setResult(calc(in_a_, in_b_));
+            calculateIfNoFlow();
         }
     });
+}
+
+void SimpleOp::calculate()
+{
+setResult(calc(in_a_, in_b_));
 }
 
 void SimpleOp::setResult(const double res)

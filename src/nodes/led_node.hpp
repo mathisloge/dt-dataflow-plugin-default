@@ -13,12 +13,13 @@ class LedNode final : public BaseNode
   public:
     LedNode(IGraphManager &graph_manager);
     LedNode(IGraphManager &graph_manager, const nlohmann::json &json);
+    void calculate() override;
 
   private:
     void renderCustomContent() override;
     void toggle();
     void initSlots();
-    void setColor(const BaseSlot* slot, int idx);
+    void setColor(const std::shared_ptr<BaseSlot>& slot, int idx);
 
   private:
     std::atomic_bool is_on_;

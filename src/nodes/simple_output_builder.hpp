@@ -8,6 +8,7 @@
         static constexpr std::string_view kKey = #NODE_NAME;                                                           \
         NODE_NAME(IGraphManager &graph_manager);                                                                       \
         NODE_NAME(IGraphManager &graph_manager, const nlohmann::json &json);                                           \
+        void calculate() override;                                                                                     \
     };
 
 #define DT_DF_BUILD_SIMPLE_O_NODE_IMPL(NODE_NAME, NODE_DISP, SLOT_KEY, SLOT_TITLE)                                     \
@@ -21,4 +22,8 @@
                                                                                                                        \
     NODE_NAME::##NODE_NAME(IGraphManager &graph_manager, const nlohmann::json &json)                                   \
         : BaseNode{graph_manager, json}                                                                                \
-    {}\
+    {}                                                                                                                 \
+    void NODE_NAME::calculate()                                                                                        \
+    {                                                                                                                  \
+        outputByLocalId(0)->subscribe([this](const BaseSlot *) { calculateIfNoFlow(); });                              \
+    }

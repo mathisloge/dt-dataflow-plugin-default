@@ -16,6 +16,7 @@ class ColorNode final : public BaseNode
     ColorNode(IGraphManager &graph_manager, const nlohmann::json &json);
 
   private:
+    void calculate() override;
     void renderCustomContent() override;
     void initSlots();
     void pushColors();

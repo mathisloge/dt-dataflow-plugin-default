@@ -16,6 +16,8 @@ class SimpleOp : public BaseNode
     SimpleOp(IGraphManager &graph_manager, const nlohmann::json &json);
     virtual ~SimpleOp();
 
+    void calculate() override;
+
   protected:
     virtual double calc(const double a, const double b) const = 0;
 
@@ -28,4 +30,4 @@ class SimpleOp : public BaseNode
     double in_b_;
     std::shared_ptr<NumberSlot> result_slot_;
 };
-} // namespace dt::df::operators
+} // namespace dt::df::op

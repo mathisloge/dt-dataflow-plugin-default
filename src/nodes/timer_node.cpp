@@ -2,6 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <dt/df/core/graph_manager.hpp>
+#include <dt/df/core/value_less_slot.hpp>
 #include <imgui.h>
 using namespace std::chrono_literals;
 
@@ -9,9 +10,8 @@ namespace dt::df
 {
 
 static Slots createInputs(IGraphManager &graph_manager);
-static Slots createOutputs(IGraphManager &graph_manager);
 TimerNode::TimerNode(IGraphManager &graph_manager)
-    : BaseNode{graph_manager, kKey, kName, createInputs(graph_manager), createOutputs(graph_manager)}
+    : BaseNode{graph_manager, kKey, kName, createInputs(graph_manager), {}}
     , delay_{1s}
     , run_{true}
     , timer_{io_ctx_}
@@ -30,6 +30,9 @@ TimerNode::TimerNode(IGraphManager &graph_manager, const nlohmann::json &json)
     initSlots();
 }
 
+void TimerNode::calculate()
+{}
+
 void TimerNode::setDelay(std::chrono::milliseconds delay)
 {
     delay_ = delay;
@@ -44,7 +47,7 @@ void TimerNode::wakeup(const boost::system::error_code &ec)
     if (ec == boost::system::errc::operation_canceled || timer_.expiry() <= std::chrono::steady_clock::now())
     {
         if (!ec)
-            output_->notify();
+            triggerFlow();
         timer_.expires_after(delay_);
         timer_.async_wait(std::bind(&TimerNode::wakeup, this, std::placeholders::_1));
     }
@@ -70,8 +73,6 @@ void TimerNode::initSlots()
     });
     auto reset = std::dynamic_pointer_cast<ValueLessSlot>(inputByLocalId(1));
     reset->subscribe([this](const BaseSlot *slot) { setDelay(delay_); });
-
-    output_ = std::dynamic_pointer_cast<ValueLessSlot>(outputByLocalId(0));
 
     timer_.expires_after(delay_);
     timer_.async_wait(std::bind(&TimerNode::wakeup, this, std::placeholders::_1));
@@ -102,18 +103,6 @@ Slots createInputs(IGraphManager &graph_manager)
     catch (...)
     {}
 
-    return slots;
-}
-Slots createOutputs(IGraphManager &graph_manager)
-{
-    Slots slots;
-    try
-    {
-        const auto &slot_fac = graph_manager.getSlotFactory("TriggerSlot");
-        slots.emplace_back(slot_fac(graph_manager, SlotType::output, "trigger", 0, SlotFieldVisibility::never));
-    }
-    catch (...)
-    {}
     return slots;
 }
 
