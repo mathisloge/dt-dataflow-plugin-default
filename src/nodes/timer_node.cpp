@@ -47,6 +47,8 @@ void TimerNode::wakeup(const boost::system::error_code &ec)
     // only wait if the timer expired or the operation was canceled ( due to setDelay )
     if (ec == boost::system::errc::operation_canceled || timer_.expiry() <= std::chrono::steady_clock::now())
     {
+        timer_.expires_after(delay_);
+        timer_.async_wait(std::bind(&TimerNode::wakeup, this, std::placeholders::_1));
         if (!ec)
         {
             using Clock = std::chrono::high_resolution_clock;
@@ -55,8 +57,6 @@ void TimerNode::wakeup(const boost::system::error_code &ec)
             triggerFlow();
             last_duration_ = std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - start);
         }
-        timer_.expires_after(delay_);
-        timer_.async_wait(std::bind(&TimerNode::wakeup, this, std::placeholders::_1));
     }
 }
 
