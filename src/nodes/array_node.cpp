@@ -33,6 +33,9 @@ void ArrayNode::initSlots()
 void ArrayNode::calculate()
 {}
 
+void ArrayNode::renderCustomContent()
+{}
+
 ArrayNode::~ArrayNode()
 {}
 } // namespace dt::df

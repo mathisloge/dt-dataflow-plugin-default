@@ -14,6 +14,7 @@ class ArrayNode final : public BaseNode
     ArrayNode(IGraphManager &graph_manager);
     ArrayNode(IGraphManager &graph_manager, const nlohmann::json &json);
     void calculate() override;
+    ~ArrayNode();
 
   private:
     void renderCustomContent() override;
