@@ -13,6 +13,9 @@ class SpanSlotImpl final : public SpanSlot
     ~SpanSlotImpl() = default;
 
   private:
+    void accept(Type value) override;
+
+  private:
     SpanSlot::Type value_;
 };
 } // namespace dt::df

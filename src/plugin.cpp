@@ -2,6 +2,7 @@
 #include <Magnum/Platform/GLContext.h>
 #include <dt/df/plugin/plugin.hpp>
 #include <imnodes.h>
+#include "nodes/array_node.hpp"
 #include "nodes/branch_node.hpp"
 #include "nodes/color_node.hpp"
 #include "nodes/led_node.hpp"
@@ -15,6 +16,7 @@
 #include "slots/int_slot.hpp"
 #include "slots/string_slot.hpp"
 #include "slots/trigger_slot.hpp"
+#include "slots/span_slot_impl.hpp"
 #include <dt/df/core/calculate_slot.hpp>
 
 namespace dt::df::plugin
@@ -78,6 +80,7 @@ class DefaultPlugin final : public Plugin
         registerNode<LedNode>(graph, "utilities/");
         registerNode<ColorNode>(graph, "utilities/");
         registerNode<BranchNode>(graph, "operators/logical/");
+        registerNode<ArrayNode>(graph, "datatype/");
     }
     void registerSlotFactories(IGraphManager &graph)
     {
@@ -88,6 +91,7 @@ class DefaultPlugin final : public Plugin
         registerSlot<TriggerSlot>(graph);
         registerSlot<AnySlotImpl>(graph);
         registerSlot<dt::df::CalculateSlot>(graph);
+        registerSlot<SpanSlotImpl>(graph);
     }
 };
 } // namespace dt::df::plugin
