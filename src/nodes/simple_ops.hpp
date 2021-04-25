@@ -11,13 +11,13 @@ DT_DF_BUILD_SIMPLE_OP(Modulo)
 DT_DF_BUILD_SIMPLE_OP(Pow)
 
 template <typename TNode>
-void registerSimpleOpNode(IGraphManager &graph)
+void registerSimpleOpNode(core::IGraphManager &graph)
 {
     const std::string disp_name{std::string{"operators/math/"} + std::string{TNode::kNodeName}};
     graph.registerNodeFactory(
         std::string{TNode::kNodeKey},
         disp_name,
-        [](IGraphManager &graph) { return std::make_shared<TNode>(graph); },
-        [](IGraphManager &graph, const nlohmann::json &json) { return std::make_shared<TNode>(graph, json); });
+        [](core::IGraphManager &graph) { return std::make_shared<TNode>(graph); },
+        [](core::IGraphManager &graph, const nlohmann::json &json) { return nullptr; /*std::make_shared<TNode>(graph, json);*/ });
 }
 } // namespace dt::df::operators

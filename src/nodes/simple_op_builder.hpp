@@ -5,8 +5,7 @@
       public:                                                                                                          \
         static constexpr const char *kNodeKey = #OP_NAME;                                                              \
         static constexpr const char *kNodeName = #OP_NAME;                                                             \
-        OP_NAME(IGraphManager &graph_manager);                                                                         \
-        OP_NAME(IGraphManager &graph_manager, const nlohmann::json &);                                                 \
+        OP_NAME(core::IGraphManager &graph_manager);                                                                   \
         ~##OP_NAME();                                                                                                  \
                                                                                                                        \
       private:                                                                                                         \
@@ -14,12 +13,8 @@
     };
 
 #define DT_DF_IMPL_SIMPLE_OP_BEGIN(OP_NAME, TITLE, NAME_A, NAME_B, NAME_RES)                                           \
-    OP_NAME::##OP_NAME(IGraphManager &graph_manager)                                                                   \
+    OP_NAME::##OP_NAME(core::IGraphManager &graph_manager)                                                             \
         : SimpleOp{graph_manager, kNodeKey, #TITLE, #NAME_A, #NAME_B, #NAME_RES}                                       \
-    {}                                                                                                                 \
-                                                                                                                       \
-    OP_NAME::##OP_NAME(IGraphManager &graph_manager, const nlohmann::json &json)                                       \
-        : SimpleOp{graph_manager, json}                                                                                \
     {}                                                                                                                 \
                                                                                                                        \
     OP_NAME::~##OP_NAME()                                                                                              \
@@ -28,3 +23,8 @@
     {
 
 #define DT_DF_IMPL_SIMPLE_OP_END }
+
+// OP_NAME(IGraphManager &graph_manager, const nlohmann::json &);
+// OP_NAME::##OP_NAME(IGraphManager &graph_manager, const nlohmann::json &json)
+//    : SimpleOp{graph_manager, json}
+//{}

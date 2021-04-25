@@ -7,7 +7,7 @@
 //#include "nodes/color_node.hpp"
 //#include "nodes/led_node.hpp"
 //#include "nodes/simple_cmps.hpp"
-//#include "nodes/simple_ops.hpp"
+#include "nodes/simple_ops.hpp"
 //#include "nodes/simple_outputs.hpp"
 //#include "nodes/timer_node.hpp"
 #include "slots/number_slot.hpp"
@@ -64,12 +64,12 @@ class DefaultPlugin final : public Plugin
         //cmp::registerSimpleCmpNode<cmp::Less>(graph);
         //cmp::registerSimpleCmpNode<cmp::NEQ>(graph);
 
-        //op::registerSimpleOpNode<op::Addition>(graph);
-        //op::registerSimpleOpNode<op::Subtraction>(graph);
-        //op::registerSimpleOpNode<op::Division>(graph);
-        //op::registerSimpleOpNode<op::Modulo>(graph);
-        //op::registerSimpleOpNode<op::Multiplication>(graph);
-        //op::registerSimpleOpNode<op::Pow>(graph);
+        op::registerSimpleOpNode<op::Addition>(graph);
+        op::registerSimpleOpNode<op::Subtraction>(graph);
+        op::registerSimpleOpNode<op::Division>(graph);
+        op::registerSimpleOpNode<op::Modulo>(graph);
+        op::registerSimpleOpNode<op::Multiplication>(graph);
+        op::registerSimpleOpNode<op::Pow>(graph);
 
         //registerNode<TimerNode>(graph, "utilities/");
         //registerNode<LedNode>(graph, "utilities/");

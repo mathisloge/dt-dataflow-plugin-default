@@ -16,7 +16,7 @@ set(SOURCES
     src/slots/span_slot.cpp
     #src/nodes/simple_outputs.cpp
     src/nodes/simple_op.cpp
-    #src/nodes/simple_ops.cpp
+    src/nodes/simple_ops.cpp
     #src/nodes/simple_cmp.cpp
     #src/nodes/simple_cmps.cpp
     #src/nodes/timer_node.cpp
