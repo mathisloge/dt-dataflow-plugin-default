@@ -2,39 +2,39 @@
 #include <Magnum/Platform/GLContext.h>
 #include <dt/df/plugin/plugin.hpp>
 #include <imnodes.h>
-#include "nodes/array_node.hpp"
-#include "nodes/branch_node.hpp"
-#include "nodes/color_node.hpp"
-#include "nodes/led_node.hpp"
-#include "nodes/simple_cmps.hpp"
-#include "nodes/simple_ops.hpp"
-#include "nodes/simple_outputs.hpp"
-#include "nodes/timer_node.hpp"
+//#include "nodes/array_node.hpp"
+//#include "nodes/branch_node.hpp"
+//#include "nodes/color_node.hpp"
+//#include "nodes/led_node.hpp"
+//#include "nodes/simple_cmps.hpp"
+//#include "nodes/simple_ops.hpp"
+//#include "nodes/simple_outputs.hpp"
+//#include "nodes/timer_node.hpp"
 #include "slots/number_slot.hpp"
 #include "slots/string_slot.hpp"
-#include "slots/span_slot_impl.hpp"
+#include "slots/span_slot.hpp"
 
 namespace dt::df::plugin
 {
 template <typename TSlot>
-void registerSlot(IGraphManager &graph)
+void registerSlot(core::IGraphManager &graph)
 {
     graph.registerSlotFactory(
         TSlot::kKey,
-        [](IGraphManager &graph, SlotType type, const SlotName &name, SlotId local, SlotFieldVisibility vis) {
-            return std::make_shared<TSlot>(TSlot::kKey, graph, type, name, local, vis);
+        [](core::IGraphManager &graph, SlotType type, const SlotName &name, SlotId local, SlotFieldVisibility vis) {
+            return std::make_shared<TSlot>(graph, type, name, local);
         },
-        [](const nlohmann::json &json) { return std::make_shared<TSlot>(json); });
+        [](const nlohmann::json &json) { return /*std::make_shared<TSlot>(json);*/ nullptr; });
 }
 
 template <typename TNode>
-void registerNode(IGraphManager &graph, const std::string &group)
+void registerNode(core::IGraphManager &graph, const std::string &group)
 {
     graph.registerNodeFactory(
         TNode::kKey,
         group + std::string{TNode::kName},
-        [](IGraphManager &graph) { return std::make_shared<TNode>(graph); },
-        [](IGraphManager &graph, const nlohmann::json &json) { return std::make_shared<TNode>(graph, json); });
+        [](core::IGraphManager &graph) { return std::make_shared<TNode>(graph); },
+        [](core::IGraphManager &graph, const nlohmann::json &json) { return /*std::make_shared<TNode>(graph, json);*/nullptr; });
 }
 class DefaultPlugin final : public Plugin
 {
@@ -50,38 +50,38 @@ class DefaultPlugin final : public Plugin
         ImGui::SetCurrentContext(imgui_ctx);
         imnodes::SetCurrentContext(imnodes_ctx);
     }
-    void registerNodeFactories(IGraphManager &graph)
+    void registerNodeFactories(core::IGraphManager &graph)
     {
-        registerSimpleOutputNode<IntNode>(graph);
-        registerSimpleOutputNode<BoolNode>(graph);
-        registerSimpleOutputNode<FloatingNode>(graph);
-        registerSimpleOutputNode<TextNode>(graph);
+        //registerSimpleOutputNode<IntNode>(graph);
+        //registerSimpleOutputNode<BoolNode>(graph);
+        //registerSimpleOutputNode<FloatingNode>(graph);
+        //registerSimpleOutputNode<TextNode>(graph);
 
-        cmp::registerSimpleCmpNode<cmp::EQ>(graph);
-        cmp::registerSimpleCmpNode<cmp::GEQ>(graph);
-        cmp::registerSimpleCmpNode<cmp::LEQ>(graph);
-        cmp::registerSimpleCmpNode<cmp::Greater>(graph);
-        cmp::registerSimpleCmpNode<cmp::Less>(graph);
-        cmp::registerSimpleCmpNode<cmp::NEQ>(graph);
+        //cmp::registerSimpleCmpNode<cmp::EQ>(graph);
+        //cmp::registerSimpleCmpNode<cmp::GEQ>(graph);
+        //cmp::registerSimpleCmpNode<cmp::LEQ>(graph);
+        //cmp::registerSimpleCmpNode<cmp::Greater>(graph);
+        //cmp::registerSimpleCmpNode<cmp::Less>(graph);
+        //cmp::registerSimpleCmpNode<cmp::NEQ>(graph);
 
-        op::registerSimpleOpNode<op::Addition>(graph);
-        op::registerSimpleOpNode<op::Subtraction>(graph);
-        op::registerSimpleOpNode<op::Division>(graph);
-        op::registerSimpleOpNode<op::Modulo>(graph);
-        op::registerSimpleOpNode<op::Multiplication>(graph);
-        op::registerSimpleOpNode<op::Pow>(graph);
+        //op::registerSimpleOpNode<op::Addition>(graph);
+        //op::registerSimpleOpNode<op::Subtraction>(graph);
+        //op::registerSimpleOpNode<op::Division>(graph);
+        //op::registerSimpleOpNode<op::Modulo>(graph);
+        //op::registerSimpleOpNode<op::Multiplication>(graph);
+        //op::registerSimpleOpNode<op::Pow>(graph);
 
-        registerNode<TimerNode>(graph, "utilities/");
-        registerNode<LedNode>(graph, "utilities/");
-        registerNode<ColorNode>(graph, "utilities/");
-        registerNode<BranchNode>(graph, "operators/logical/");
-        registerNode<ArrayNode>(graph, "datatype/");
+        //registerNode<TimerNode>(graph, "utilities/");
+        //registerNode<LedNode>(graph, "utilities/");
+        //registerNode<ColorNode>(graph, "utilities/");
+        //registerNode<BranchNode>(graph, "operators/logical/");
+        //registerNode<ArrayNode>(graph, "datatype/");
     }
-    void registerSlotFactories(IGraphManager &graph)
+    void registerSlotFactories(core::IGraphManager &graph)
     {
         registerSlot<NumberSlot>(graph);
         registerSlot<StringSlot>(graph);
-        registerSlot<SpanSlotImpl>(graph);
+        registerSlot<SpanSlot>(graph);
     }
 };
 } // namespace dt::df::plugin

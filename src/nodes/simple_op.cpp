@@ -2,6 +2,7 @@
 #include <dt/df/core/graph_manager.hpp>
 namespace dt::df::op
 {
+#if 0
 static Slots makeInputs(IGraphManager &graph_manager, const std::string &in_a_name, const std::string &in_b_name)
 {
     const auto &flot_fac = graph_manager.getSlotFactory("FloatingSlot");
@@ -13,54 +14,31 @@ static Slots makeOutput(IGraphManager &graph_manager, const std::string &out_res
     const auto &flot_fac = graph_manager.getSlotFactory("FloatingSlot");
     return Slots{flot_fac(graph_manager, SlotType::output, out_res_name, 0, SlotFieldVisibility::without_connection)};
 }
-
-SimpleOp::SimpleOp(IGraphManager &graph_manager,
+#endif
+SimpleOp::SimpleOp(core::IGraphManager &graph_manager,
                    const NodeKey &key,
                    const std::string &title,
                    const std::string &in_a_name,
                    const std::string &in_b_name,
                    const std::string &result_name)
-    : BaseNode{graph_manager,
-               key,
-               title,
-               makeInputs(graph_manager, in_a_name, in_b_name),
-               makeOutput(graph_manager, result_name)}
-{
-    initSlots();
-}
+    : BaseNode{graph_manager, key, title}
+{}
 
-SimpleOp::SimpleOp(IGraphManager &graph_manager, const nlohmann::json &json)
-    : BaseNode(graph_manager, json)
+void SimpleOp::init()
 {
-    initSlots();
-}
+    result_slot_ = std::dynamic_pointer_cast<ResultSlotT>(outputByLocalId(0));
 
-void SimpleOp::initSlots()
-{
-    result_slot_ = std::dynamic_pointer_cast<NumberSlot>(outputByLocalId(0));
-
-    inputByLocalId(0)->subscribe([this](const BaseSlot *slot) {
-        auto in_slot = dynamic_cast<const NumberSlot *>(slot);
-        if (in_slot)
-        {
-            in_a_ = in_slot->value();
-            setResult(calc(in_a_, in_b_));
-            calculateIfNoFlow();
-        }
+    std::dynamic_pointer_cast<ResultSlotT>(inputByLocalId(0))->connectToNodeFnc([this](const auto &number) {
+        std::visit([this](auto &&arg) { in_a_ = static_cast<double>(arg); }, number);
     });
-    inputByLocalId(1)->subscribe([this](const BaseSlot *slot) {
-        auto in_slot = dynamic_cast<const NumberSlot *>(slot);
-        if (in_slot)
-        {
-            in_b_ = in_slot->value();
-            calculateIfNoFlow();
-        }
+    std::dynamic_pointer_cast<ResultSlotT>(inputByLocalId(1))->connectToNodeFnc([this](const auto &number) {
+        std::visit([this](auto &&arg) { in_b_ = static_cast<double>(arg); }, number);
     });
 }
 
-void SimpleOp::calculate()
+void SimpleOp::evaluate()
 {
-setResult(calc(in_a_, in_b_));
+    setResult(calc(in_a_, in_b_));
 }
 
 void SimpleOp::setResult(const double res)
@@ -70,4 +48,4 @@ void SimpleOp::setResult(const double res)
 
 SimpleOp::~SimpleOp()
 {}
-} // namespace dt::df::operators
+} // namespace dt::df::op
