@@ -1,11 +1,11 @@
-#include "string_slot.hpp"
+#include "number_slot.hpp"
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
 namespace dt::df
 {
 
-StringSlot::StringSlot(core::IGraphManager &graph_manager,
+NumberSlot::NumberSlot(core::IGraphManager &graph_manager,
                        const SlotType type,
                        const SlotName &name,
                        const SlotId local_id)

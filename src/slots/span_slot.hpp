@@ -1,14 +1,15 @@
 #pragma once
+#include <span>
 #include <dt/df/core/base_slot.hpp>
 namespace dt::df
 {
-class StringSlot final : public core::BaseSlot<const std::string &>
+class SpanSlot final : public core::BaseSlot<const std::span<uint8_t> &>
 {
   public:
-    static constexpr std::string_view kKey = "StringSlot";
+    static constexpr std::string_view kKey = "SpanSlot";
 
   public:
-    explicit StringSlot(core::IGraphManager &graph_manager,
+    explicit SpanSlot(core::IGraphManager &graph_manager,
                         const SlotType type,
                         const SlotName &name,
                         const SlotId local_id);

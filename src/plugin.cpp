@@ -10,14 +10,9 @@
 #include "nodes/simple_ops.hpp"
 #include "nodes/simple_outputs.hpp"
 #include "nodes/timer_node.hpp"
-#include "slots/any_slot.hpp"
-#include "slots/bool_slot.hpp"
-#include "slots/floating_slot.hpp"
-#include "slots/int_slot.hpp"
+#include "slots/number_slot.hpp"
 #include "slots/string_slot.hpp"
-#include "slots/trigger_slot.hpp"
 #include "slots/span_slot_impl.hpp"
-#include <dt/df/core/calculate_slot.hpp>
 
 namespace dt::df::plugin
 {
@@ -84,13 +79,8 @@ class DefaultPlugin final : public Plugin
     }
     void registerSlotFactories(IGraphManager &graph)
     {
-        registerSlot<BoolSlot>(graph);
-        registerSlot<FloatingSlot>(graph);
-        registerSlot<IntSlot>(graph);
-        registerSlot<StringSlotImpl>(graph);
-        registerSlot<TriggerSlot>(graph);
-        registerSlot<AnySlotImpl>(graph);
-        registerSlot<dt::df::CalculateSlot>(graph);
+        registerSlot<NumberSlot>(graph);
+        registerSlot<StringSlot>(graph);
         registerSlot<SpanSlotImpl>(graph);
     }
 };
