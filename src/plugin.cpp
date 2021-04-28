@@ -56,6 +56,7 @@ class DefaultPlugin final : public Plugin
         registerSimpleOutputNode<IntOutputNode>(graph);
         registerSimpleOutputNode<FloatOutputNode>(graph);
         registerSimpleOutputNode<StringOutputNode>(graph);
+        registerSimpleOutputNode<FlowOutputNode>(graph);
 
         cmp::registerSimpleCmpNode<cmp::EQ>(graph);
         cmp::registerSimpleCmpNode<cmp::GEQ>(graph);

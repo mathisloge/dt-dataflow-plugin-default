@@ -1,7 +1,5 @@
 #include "simple_cmps.hpp"
 #include <dt/df/core/graph_manager.hpp>
-namespace dt::df::cmp
-{
 
 template <class... Ts>
 struct overload : Ts...
@@ -10,17 +8,18 @@ struct overload : Ts...
 };
 template <class... Ts>
 overload(Ts...) -> overload<Ts...>;
+#pragma warning(push)
+#pragma warning(disable : 4805 4804)
+namespace dt::df::cmp
+{
 
 DT_DF_IMPL_SIMPLE_CMP_BEGIN(Less, less, a, b, result)
-return a < b;
+return std::visit([](auto ta, auto tb) { return ta < tb; }, a, b);
 DT_DF_IMPL_SIMPLE_CMP_END
 
 DT_DF_IMPL_SIMPLE_CMP_BEGIN(LEQ, leq, a, b, result)
-return a <= b;
+return std::visit([](auto ta, auto tb) { return ta <= tb; }, a, b);
 DT_DF_IMPL_SIMPLE_CMP_END
-
-#pragma warning(push)
-#pragma warning(disable:4805)
 
 DT_DF_IMPL_SIMPLE_CMP_BEGIN(EQ, eq, a, b, result)
 return std::visit(
@@ -44,13 +43,13 @@ return std::visit(
     b);
 DT_DF_IMPL_SIMPLE_CMP_END
 
-#pragma warning(pop)
-
 DT_DF_IMPL_SIMPLE_CMP_BEGIN(GEQ, geq, a, b, result)
-return a >= b;
+return std::visit([](auto ta, auto tb) { return ta >= tb; }, a, b);
 DT_DF_IMPL_SIMPLE_CMP_END
 
 DT_DF_IMPL_SIMPLE_CMP_BEGIN(Greater, greater, a, b, result)
-return a > b;
+return std::visit([](auto ta, auto tb) { return ta > tb; }, a, b);
 DT_DF_IMPL_SIMPLE_CMP_END
 } // namespace dt::df::cmp
+
+#pragma warning(pop)

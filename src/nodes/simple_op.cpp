@@ -16,16 +16,14 @@ SimpleOp::SimpleOp(core::IGraphManager &graph_manager,
 
 void SimpleOp::init(core::IGraphManager &graph_manager)
 {
+    addInputFlow(graph_manager);
+    addOutputFlow(graph_manager);
     result_slot_ = std::dynamic_pointer_cast<ResultSlotT>(addOutput(graph_manager, "NumberSlot", result_name_, 0));
 
     std::dynamic_pointer_cast<ResultSlotT>(addInput(graph_manager, "NumberSlot", in_a_name_, 0))
-        ->connectToNodeFnc([this](const auto &number) {
-            std::visit([this](auto &&arg) { in_a_ = static_cast<double>(arg); }, number);
-        });
+        ->connectToNodeFnc([this](const auto &number) { in_a_ = number; });
     std::dynamic_pointer_cast<ResultSlotT>(addInput(graph_manager, "NumberSlot", in_b_name_, 1))
-        ->connectToNodeFnc([this](const auto &number) {
-            std::visit([this](auto &&arg) { in_b_ = static_cast<double>(arg); }, number);
-        });
+        ->connectToNodeFnc([this](const auto &number) { in_b_ = number; });
 }
 
 void SimpleOp::evaluate()
@@ -33,7 +31,7 @@ void SimpleOp::evaluate()
     setResult(calc(in_a_, in_b_));
 }
 
-void SimpleOp::setResult(const double res)
+void SimpleOp::setResult(const NumberT res)
 {
     result_slot_->setValue(res);
 }

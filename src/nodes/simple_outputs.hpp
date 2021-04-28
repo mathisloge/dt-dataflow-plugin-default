@@ -1,6 +1,7 @@
 #pragma once
 #include <dt/df/core/base_node.hpp>
 #include <dt/df/core/base_slot.hpp>
+#include <dt/df/core/flow_base_slot.hpp>
 #include <dt/df/core/graph_manager.hpp>
 #include "../slots/basic_slots.hpp"
 #include "simple_output_builder.hpp"
@@ -47,6 +48,25 @@ class StringOutputNode final : public SimpleOutputNode<StringSlotT>
 
   private:
     std::string output_val_;
+};
+
+class FlowOutputNode : public core::BaseNode
+{
+  public:
+    static constexpr std::string_view kKey = "FlowOutputNode";
+    static constexpr std::string_view kName = "Flow trigger";
+    using OutputSlotT = core::FlowBaseSlot;
+
+    explicit FlowOutputNode(core::IGraphManager &graph_manager);
+    void init(core::IGraphManager &graph_manager) override;
+    void evaluate() override;
+    ~FlowOutputNode();
+
+  private:
+    void renderCustomContent() override;
+
+  protected:
+    std::shared_ptr<OutputSlotT> output_slot_;
 };
 
 template <typename TNode>

@@ -9,7 +9,7 @@
         ~##OP_NAME();                                                                                                  \
                                                                                                                        \
       private:                                                                                                         \
-        double calc(const double a, const double b) const override;                                                    \
+        NumberT calc(const NumberT a, const NumberT b) const override;                                                    \
     };
 
 #define DT_DF_IMPL_SIMPLE_OP_BEGIN(OP_NAME, TITLE, NAME_A, NAME_B, NAME_RES)                                           \
@@ -19,7 +19,7 @@
                                                                                                                        \
     OP_NAME::~##OP_NAME()                                                                                              \
     {}                                                                                                                 \
-    double OP_NAME::calc(const double a, const double b) const                                                         \
+    SimpleOp::NumberT OP_NAME::calc(const NumberT a, const NumberT b) const                                                         \
     {
 
 #define DT_DF_IMPL_SIMPLE_OP_END }
