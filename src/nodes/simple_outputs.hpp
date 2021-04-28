@@ -2,23 +2,63 @@
 #include <dt/df/core/base_node.hpp>
 #include <dt/df/core/base_slot.hpp>
 #include <dt/df/core/graph_manager.hpp>
+#include "../slots/basic_slots.hpp"
 #include "simple_output_builder.hpp"
 
 namespace dt::df
 {
-DT_DF_BUILD_SIMPLE_O_NODE(IntNode)
-DT_DF_BUILD_SIMPLE_O_NODE(BoolNode)
-DT_DF_BUILD_SIMPLE_O_NODE(FloatingNode)
-DT_DF_BUILD_SIMPLE_O_NODE(TextNode)
+class IntOutputNode final : public SimpleOutputNode<NumberSlotT>
+{
+  public:
+    static constexpr std::string_view kKey = "IntOutputNode";
+    static constexpr std::string_view kName = "Int output";
+    explicit IntOutputNode(core::IGraphManager &graph_manager);
+
+  private:
+    void renderCustomContent() override;
+
+  private:
+    int output_val_;
+};
+
+class FloatOutputNode final : public SimpleOutputNode<NumberSlotT>
+{
+  public:
+    static constexpr std::string_view kKey = "FloatOutputNode";
+    static constexpr std::string_view kName = "Float output";
+    explicit FloatOutputNode(core::IGraphManager &graph_manager);
+
+  private:
+    void renderCustomContent() override;
+
+  private:
+    float output_val_;
+};
+
+class StringOutputNode final : public SimpleOutputNode<StringSlotT>
+{
+  public:
+    static constexpr std::string_view kKey = "StringOutputNode";
+    static constexpr std::string_view kName = "String output";
+    explicit StringOutputNode(core::IGraphManager &graph_manager);
+
+  private:
+    void renderCustomContent() override;
+
+  private:
+    std::string output_val_;
+};
 
 template <typename TNode>
-void registerSimpleOutputNode(IGraphManager &graph)
+void registerSimpleOutputNode(core::IGraphManager &graph)
 {
-    const std::string disp_name{std::string{"output/"} + std::string{TNode::kKey}};
+    const std::string disp_name{std::string{"output/"} + std::string{TNode::kName}};
     graph.registerNodeFactory(
         std::string{TNode::kKey},
         disp_name,
-        [](IGraphManager &graph) { return std::make_shared<TNode>(graph); },
-        [](IGraphManager &graph, const nlohmann::json &json) { return nullptr;/*std::make_shared<TNode>(graph, json);*/ });
+        [](core::IGraphManager &graph) { return std::make_shared<TNode>(graph); },
+        [](core::IGraphManager &graph, const nlohmann::json &json) {
+            return nullptr; /*std::make_shared<TNode>(graph, json);*/
+        });
 }
 } // namespace dt::df

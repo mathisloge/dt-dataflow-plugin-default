@@ -9,7 +9,7 @@
 //#include "nodes/led_node.hpp"
 #include "nodes/simple_cmps.hpp"
 #include "nodes/simple_ops.hpp"
-//#include "nodes/simple_outputs.hpp"
+#include "nodes/simple_outputs.hpp"
 //#include "nodes/timer_node.hpp"
 #include "slots/basic_slots.hpp"
 #include "slots/flow_slot.hpp"
@@ -53,10 +53,9 @@ class DefaultPlugin final : public Plugin
     }
     void registerNodeFactories(core::IGraphManager &graph)
     {
-        // registerSimpleOutputNode<IntNode>(graph);
-        // registerSimpleOutputNode<BoolNode>(graph);
-        // registerSimpleOutputNode<FloatingNode>(graph);
-        // registerSimpleOutputNode<TextNode>(graph);
+        registerSimpleOutputNode<IntOutputNode>(graph);
+        registerSimpleOutputNode<FloatOutputNode>(graph);
+        registerSimpleOutputNode<StringOutputNode>(graph);
 
         cmp::registerSimpleCmpNode<cmp::EQ>(graph);
         cmp::registerSimpleCmpNode<cmp::GEQ>(graph);

@@ -1,24 +1,35 @@
 #include "simple_outputs.hpp"
-#include <dt/df/core/graph_manager.hpp>
+#include <imgui.h>
+#include <imgui_stdlib.h>
 namespace dt::df
 {
-static Slots getOutputs(IGraphManager &graph_manager, const SlotKey &slot, const std::string &slot_title) noexcept
+IntOutputNode::IntOutputNode(core::IGraphManager &graph_manager)
+    : SimpleOutputNode(graph_manager, std::string{kKey}, "Int Output", kNumberSlotKey)
+{}
+
+void IntOutputNode::renderCustomContent()
 {
-    try
-    {
-        return Slots{graph_manager.getSlotFactory(slot)(
-            graph_manager, SlotType::output, slot_title, 0, SlotFieldVisibility::always)};
-    }
-    catch (...)
-    {
-        // todo: log error
-    }
-    return Slots{};
+    if (ImGui::InputInt("value", &output_val_))
+        output_slot_->setValue(output_val_);
 }
 
-DT_DF_BUILD_SIMPLE_O_NODE_IMPL(BoolNode, Bool, BoolSlot, bool)
-DT_DF_BUILD_SIMPLE_O_NODE_IMPL(IntNode, Int, IntSlot, int)
-DT_DF_BUILD_SIMPLE_O_NODE_IMPL(FloatingNode, Floating, FloatingSlot, double)
-DT_DF_BUILD_SIMPLE_O_NODE_IMPL(TextNode, Text, StringSlot, string)
+FloatOutputNode::FloatOutputNode(core::IGraphManager &graph_manager)
+    : SimpleOutputNode(graph_manager, std::string{kKey}, "Float Output", kNumberSlotKey)
+{}
 
+void FloatOutputNode::renderCustomContent()
+{
+    if (ImGui::InputFloat("value", &output_val_))
+        output_slot_->setValue(output_val_);
+}
+
+StringOutputNode::StringOutputNode(core::IGraphManager &graph_manager)
+    : SimpleOutputNode(graph_manager, std::string{kKey}, "String Output", kStringSlotKey)
+{}
+
+void StringOutputNode::renderCustomContent()
+{
+    if (ImGui::InputTextMultiline("value", &output_val_))
+        output_slot_->setValue(output_val_);
+}
 } // namespace dt::df
