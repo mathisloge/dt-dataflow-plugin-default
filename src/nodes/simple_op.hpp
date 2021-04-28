@@ -15,17 +15,19 @@ class SimpleOp : public core::BaseNode
                       const std::string &result_name = "result");
     virtual ~SimpleOp();
 
-    void init() override;
+    void init(core::IGraphManager &graph_manager) override;
     void evaluate() override;
 
   protected:
     virtual double calc(const double a, const double b) const = 0;
 
   private:
-    void initSlots();
     void setResult(const double res);
 
   private:
+    const std::string in_a_name_;
+    const std::string in_b_name_;
+    const std::string result_name_;
     double in_a_;
     double in_b_;
 

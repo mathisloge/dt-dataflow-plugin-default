@@ -19,6 +19,6 @@ void registerSimpleOutputNode(IGraphManager &graph)
         std::string{TNode::kKey},
         disp_name,
         [](IGraphManager &graph) { return std::make_shared<TNode>(graph); },
-        [](IGraphManager &graph, const nlohmann::json &json) { return std::make_shared<TNode>(graph, json); });
+        [](IGraphManager &graph, const nlohmann::json &json) { return nullptr;/*std::make_shared<TNode>(graph, json);*/ });
 }
 } // namespace dt::df

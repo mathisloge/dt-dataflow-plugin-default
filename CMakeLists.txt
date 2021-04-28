@@ -17,8 +17,8 @@ set(SOURCES
     #src/nodes/simple_outputs.cpp
     src/nodes/simple_op.cpp
     src/nodes/simple_ops.cpp
-    #src/nodes/simple_cmp.cpp
-    #src/nodes/simple_cmps.cpp
+    src/nodes/simple_cmp.cpp
+    src/nodes/simple_cmps.cpp
     #src/nodes/timer_node.cpp
     #src/nodes/led_node.cpp
     #src/nodes/color_node.cpp

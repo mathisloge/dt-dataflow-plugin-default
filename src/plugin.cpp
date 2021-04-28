@@ -6,7 +6,7 @@
 //#include "nodes/branch_node.hpp"
 //#include "nodes/color_node.hpp"
 //#include "nodes/led_node.hpp"
-//#include "nodes/simple_cmps.hpp"
+#include "nodes/simple_cmps.hpp"
 #include "nodes/simple_ops.hpp"
 //#include "nodes/simple_outputs.hpp"
 //#include "nodes/timer_node.hpp"
@@ -57,12 +57,12 @@ class DefaultPlugin final : public Plugin
         //registerSimpleOutputNode<FloatingNode>(graph);
         //registerSimpleOutputNode<TextNode>(graph);
 
-        //cmp::registerSimpleCmpNode<cmp::EQ>(graph);
-        //cmp::registerSimpleCmpNode<cmp::GEQ>(graph);
-        //cmp::registerSimpleCmpNode<cmp::LEQ>(graph);
-        //cmp::registerSimpleCmpNode<cmp::Greater>(graph);
-        //cmp::registerSimpleCmpNode<cmp::Less>(graph);
-        //cmp::registerSimpleCmpNode<cmp::NEQ>(graph);
+        cmp::registerSimpleCmpNode<cmp::EQ>(graph);
+        cmp::registerSimpleCmpNode<cmp::GEQ>(graph);
+        cmp::registerSimpleCmpNode<cmp::LEQ>(graph);
+        cmp::registerSimpleCmpNode<cmp::Greater>(graph);
+        cmp::registerSimpleCmpNode<cmp::Less>(graph);
+        cmp::registerSimpleCmpNode<cmp::NEQ>(graph);
 
         op::registerSimpleOpNode<op::Addition>(graph);
         op::registerSimpleOpNode<op::Subtraction>(graph);

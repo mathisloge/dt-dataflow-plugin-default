@@ -5,25 +5,25 @@
       public:                                                                                                          \
         static constexpr const char *kNodeKey = #OP_NAME;                                                              \
         static constexpr const char *kNodeName = #OP_NAME;                                                             \
-        OP_NAME(IGraphManager &graph_manager);                                                                         \
-        OP_NAME(IGraphManager &graph_manager, const nlohmann::json &);                                                 \
+        OP_NAME(core::IGraphManager &graph_manager);                                                                   \
         ~##OP_NAME();                                                                                                  \
                                                                                                                        \
       private:                                                                                                         \
-        bool cmp(const double a, const double b) const override;                                                       \
+        bool cmp(const NumberT &a, const NumberT &b) const override;                                                   \
     };
 
 #define DT_DF_IMPL_SIMPLE_CMP_BEGIN(OP_NAME, TITLE, NAME_A, NAME_B, NAME_RES)                                          \
-    OP_NAME::##OP_NAME(IGraphManager &graph_manager)                                                                   \
+    OP_NAME::##OP_NAME(core::IGraphManager &graph_manager)                                                             \
         : SimpleCmp{graph_manager, kNodeKey, #TITLE, #NAME_A, #NAME_B, #NAME_RES}                                      \
-    {}                                                                                                                 \
-                                                                                                                       \
-    OP_NAME::##OP_NAME(IGraphManager &graph_manager, const nlohmann::json &json)                                       \
-        : SimpleCmp{graph_manager, json}                                                                               \
     {}                                                                                                                 \
                                                                                                                        \
     OP_NAME::~##OP_NAME()                                                                                              \
     {}                                                                                                                 \
-    bool OP_NAME::cmp(const double a, const double b) const                                                            \
+    bool OP_NAME::cmp(const NumberT &a, const NumberT &b) const                                                        \
     {
 #define DT_DF_IMPL_SIMPLE_CMP_END }
+
+// OP_NAME(IGraphManager &graph_manager, const nlohmann::json &);
+// OP_NAME::##OP_NAME(IGraphManager &graph_manager, const nlohmann::json &json)
+//      : SimpleCmp{graph_manager, json}
+//{}
