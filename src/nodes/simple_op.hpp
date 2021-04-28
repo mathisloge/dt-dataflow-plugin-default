@@ -2,6 +2,7 @@
 #include <variant>
 #include <dt/df/core/base_node.hpp>
 #include <dt/df/core/base_slot.hpp>
+#include "../slots/basic_slots.hpp"
 namespace dt::df::op
 {
 class SimpleOp : public core::BaseNode
@@ -31,7 +32,7 @@ class SimpleOp : public core::BaseNode
     double in_a_;
     double in_b_;
 
-    using ResultSlotT = core::BaseSlot<const std::variant<bool, int, float, double> &>;
+    using ResultSlotT = core::BaseSlot<NumberSlotT>;
     std::shared_ptr<ResultSlotT> result_slot_;
 };
 } // namespace dt::df::op

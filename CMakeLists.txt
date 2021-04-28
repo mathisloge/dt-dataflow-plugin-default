@@ -11,9 +11,6 @@ set(DTDF_PLUGIN_INSTALL_REL_DIR "${CMAKE_INSTALL_PREFIX}/bin/dataflow/rel")
 
 set(SOURCES         
     src/plugin.cpp
-    src/slots/string_slot.cpp
-    src/slots/number_slot.cpp
-    src/slots/span_slot.cpp
     src/slots/flow_slot.cpp
     #src/nodes/simple_outputs.cpp
     src/nodes/simple_op.cpp

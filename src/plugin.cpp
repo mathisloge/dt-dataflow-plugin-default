@@ -1,5 +1,6 @@
 #include <Corrade/PluginManager/AbstractManager.h>
 #include <Magnum/Platform/GLContext.h>
+#include <dt/df/plugin/helper.hpp>
 #include <dt/df/plugin/plugin.hpp>
 #include <imnodes.h>
 //#include "nodes/array_node.hpp"
@@ -10,9 +11,7 @@
 #include "nodes/simple_ops.hpp"
 //#include "nodes/simple_outputs.hpp"
 //#include "nodes/timer_node.hpp"
-#include "slots/number_slot.hpp"
-#include "slots/string_slot.hpp"
-#include "slots/span_slot.hpp"
+#include "slots/basic_slots.hpp"
 #include "slots/flow_slot.hpp"
 namespace dt::df::plugin
 {
@@ -34,7 +33,9 @@ void registerNode(core::IGraphManager &graph, const std::string &group)
         TNode::kKey,
         group + std::string{TNode::kName},
         [](core::IGraphManager &graph) { return std::make_shared<TNode>(graph); },
-        [](core::IGraphManager &graph, const nlohmann::json &json) { return /*std::make_shared<TNode>(graph, json);*/nullptr; });
+        [](core::IGraphManager &graph, const nlohmann::json &json) {
+            return /*std::make_shared<TNode>(graph, json);*/ nullptr;
+        });
 }
 class DefaultPlugin final : public Plugin
 {
@@ -52,10 +53,10 @@ class DefaultPlugin final : public Plugin
     }
     void registerNodeFactories(core::IGraphManager &graph)
     {
-        //registerSimpleOutputNode<IntNode>(graph);
-        //registerSimpleOutputNode<BoolNode>(graph);
-        //registerSimpleOutputNode<FloatingNode>(graph);
-        //registerSimpleOutputNode<TextNode>(graph);
+        // registerSimpleOutputNode<IntNode>(graph);
+        // registerSimpleOutputNode<BoolNode>(graph);
+        // registerSimpleOutputNode<FloatingNode>(graph);
+        // registerSimpleOutputNode<TextNode>(graph);
 
         cmp::registerSimpleCmpNode<cmp::EQ>(graph);
         cmp::registerSimpleCmpNode<cmp::GEQ>(graph);
@@ -71,17 +72,17 @@ class DefaultPlugin final : public Plugin
         op::registerSimpleOpNode<op::Multiplication>(graph);
         op::registerSimpleOpNode<op::Pow>(graph);
 
-        //registerNode<TimerNode>(graph, "utilities/");
-        //registerNode<LedNode>(graph, "utilities/");
-        //registerNode<ColorNode>(graph, "utilities/");
-        //registerNode<BranchNode>(graph, "operators/logical/");
-        //registerNode<ArrayNode>(graph, "datatype/");
+        // registerNode<TimerNode>(graph, "utilities/");
+        // registerNode<LedNode>(graph, "utilities/");
+        // registerNode<ColorNode>(graph, "utilities/");
+        // registerNode<BranchNode>(graph, "operators/logical/");
+        // registerNode<ArrayNode>(graph, "datatype/");
     }
     void registerSlotFactories(core::IGraphManager &graph)
     {
-        registerSlot<NumberSlot>(graph);
-        registerSlot<StringSlot>(graph);
-        registerSlot<SpanSlot>(graph);
+        registerBaseSlot<NumberSlotT>(graph, kNumberSlotKey);
+        registerBaseSlot<StringSlotT>(graph, kStringSlotKey);
+        registerBaseSlot<ByteArraySlotT>(graph, kByteArrayKey);
         registerSlot<FlowSlot>(graph);
     }
 };

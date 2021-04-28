@@ -3,13 +3,14 @@
 #include <dt/df/core/base_node.hpp>
 #include <dt/df/core/base_slot.hpp>
 #include <dt/df/core/flow_base_slot.hpp>
+#include "../slots/basic_slots.hpp"
 
 namespace dt::df::cmp
 {
 class SimpleCmp : public core::BaseNode
 {
   protected:
-    using NumberT = std::variant<bool, int, float, double>;
+    using NumberT = std::remove_cv<std::remove_reference<NumberSlotT>::type>::type;
     using ResultSlotT = core::BaseSlot<const NumberT &>;
     using FlowSlotT = core::FlowBaseSlot;
 
