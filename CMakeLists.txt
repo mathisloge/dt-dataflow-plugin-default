@@ -14,6 +14,7 @@ set(SOURCES
     src/slots/string_slot.cpp
     src/slots/number_slot.cpp
     src/slots/span_slot.cpp
+    src/slots/flow_slot.cpp
     #src/nodes/simple_outputs.cpp
     src/nodes/simple_op.cpp
     src/nodes/simple_ops.cpp

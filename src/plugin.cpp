@@ -13,7 +13,7 @@
 #include "slots/number_slot.hpp"
 #include "slots/string_slot.hpp"
 #include "slots/span_slot.hpp"
-
+#include "slots/flow_slot.hpp"
 namespace dt::df::plugin
 {
 template <typename TSlot>
@@ -82,6 +82,7 @@ class DefaultPlugin final : public Plugin
         registerSlot<NumberSlot>(graph);
         registerSlot<StringSlot>(graph);
         registerSlot<SpanSlot>(graph);
+        registerSlot<FlowSlot>(graph);
     }
 };
 } // namespace dt::df::plugin
