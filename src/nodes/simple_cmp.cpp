@@ -17,12 +17,12 @@ SimpleCmp::SimpleCmp(core::IGraphManager &graph_manager,
 void SimpleCmp::init(core::IGraphManager &graph_manager)
 {
     result_slot_ = std::dynamic_pointer_cast<ResultSlotT>(addOutput(graph_manager, "NumberSlot", result_name_, 0));
-    true_slot_ = std::dynamic_pointer_cast<FlowSlotT>(addOutput(graph_manager, "FlowSlot", result_name_, 1));
-    false_slot_ = std::dynamic_pointer_cast<FlowSlotT>(addOutput(graph_manager, "FlowSlot", result_name_, 2));
+    true_slot_ = std::dynamic_pointer_cast<FlowSlotT>(addOutput(graph_manager, "FlowSlot", "onTrue", 1));
+    false_slot_ = std::dynamic_pointer_cast<FlowSlotT>(addOutput(graph_manager, "FlowSlot", "onFalse", 2));
 
     std::dynamic_pointer_cast<ResultSlotT>(addInput(graph_manager, "NumberSlot", in_a_name_, 0))
         ->connectToNodeFnc([this](const auto &number) { in_a_ = number; });
-    std::dynamic_pointer_cast<ResultSlotT>(addInput(graph_manager, "NumberSlot", in_a_name_, 1))
+    std::dynamic_pointer_cast<ResultSlotT>(addInput(graph_manager, "NumberSlot", in_b_name_, 1))
         ->connectToNodeFnc([this](const auto &number) { in_b_ = number; });
 }
 
