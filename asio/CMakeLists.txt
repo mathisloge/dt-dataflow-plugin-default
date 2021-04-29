@@ -3,6 +3,7 @@ project(AsioPlugin)
 
 set(SOURCES         
     src/plugin.cpp
+    src/nodes/io_ctx_node.cpp
 )
 message(STATUS "Plugin DBG Install dir: ${DTDF_PLUGIN_INSTALL_DBG_DIR}")
 message(STATUS "Plugin REL Install dir: ${DTDF_PLUGIN_INSTALL_REL_DIR}")

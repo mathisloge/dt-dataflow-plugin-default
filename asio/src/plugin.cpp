@@ -1,7 +1,9 @@
+#include <boost/asio.hpp>
 #include <Corrade/PluginManager/AbstractManager.h>
 #include <Magnum/Platform/GLContext.h>
 #include <dt/df/plugin/helper.hpp>
 #include <dt/df/plugin/plugin.hpp>
+#include "nodes/io_ctx_node.hpp"
 namespace dt::df::plugin
 {
 
@@ -21,9 +23,11 @@ class AsioPlugin final : public Plugin
     }
     void registerNodeFactories(core::IGraphManager &graph)
     {
+        registerNode<IoCtxNode>(graph, "asio/");
     }
     void registerSlotFactories(core::IGraphManager &graph)
     {
+        registerBaseSlot<boost::asio::io_context &>(graph, "AsioIoContext");
     }
 };
 } // namespace dt::df::plugin

@@ -26,17 +26,6 @@ void registerSlot(core::IGraphManager &graph)
         [](const nlohmann::json &json) { return /*std::make_shared<TSlot>(json);*/ nullptr; });
 }
 
-template <typename TNode>
-void registerNode(core::IGraphManager &graph, const std::string &group)
-{
-    graph.registerNodeFactory(
-        TNode::kKey,
-        group + std::string{TNode::kName},
-        [](core::IGraphManager &graph) { return std::make_shared<TNode>(graph); },
-        [](core::IGraphManager &graph, const nlohmann::json &json) {
-            return /*std::make_shared<TNode>(graph, json);*/ nullptr;
-        });
-}
 class BasePlugin final : public Plugin
 {
 
