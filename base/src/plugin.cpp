@@ -4,7 +4,7 @@
 #include <dt/df/plugin/plugin.hpp>
 #include <imnodes.h>
 //#include "nodes/array_node.hpp"
-//#include "nodes/branch_node.hpp"
+#include "nodes/branch_node.hpp"
 //#include "nodes/color_node.hpp"
 //#include "nodes/led_node.hpp"
 #include "nodes/simple_cmps.hpp"
@@ -72,10 +72,10 @@ class BasePlugin final : public Plugin
         op::registerSimpleOpNode<op::Multiplication>(graph);
         op::registerSimpleOpNode<op::Pow>(graph);
 
-        // registerNode<TimerNode>(graph, "utilities/");
+        //registerNode<TimerNode>(graph, "utilities/");
         // registerNode<LedNode>(graph, "utilities/");
         // registerNode<ColorNode>(graph, "utilities/");
-        // registerNode<BranchNode>(graph, "operators/logical/");
+        registerNode<BranchNode>(graph, "operators/logical/");
         // registerNode<ArrayNode>(graph, "datatype/");
     }
     void registerSlotFactories(core::IGraphManager &graph)

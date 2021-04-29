@@ -5,6 +5,8 @@ namespace dt::df
 BranchNode::BranchNode(core::IGraphManager &graph_manager)
     : BaseNode{graph_manager, kKey, kName}
     , input_cond_{false}
+    , true_out_flow_{nullptr}
+    , false_out_flow_{nullptr}
 {}
 
 void BranchNode::init(core::IGraphManager &graph_manager)
