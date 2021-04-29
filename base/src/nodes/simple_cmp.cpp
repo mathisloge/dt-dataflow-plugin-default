@@ -19,8 +19,6 @@ void SimpleCmp::init(core::IGraphManager &graph_manager)
     addInputFlow(graph_manager);
     addOutputFlow(graph_manager);
     result_slot_ = std::dynamic_pointer_cast<ResultSlotT>(addOutput(graph_manager, "NumberSlot", result_name_, 0));
-    true_slot_ = std::dynamic_pointer_cast<FlowSlotT>(addOutput(graph_manager, "FlowSlot", "onTrue", 1));
-    false_slot_ = std::dynamic_pointer_cast<FlowSlotT>(addOutput(graph_manager, "FlowSlot", "onFalse", 2));
 
     std::dynamic_pointer_cast<ResultSlotT>(addInput(graph_manager, "NumberSlot", in_a_name_, 0))
         ->connectToNodeFnc([this](const auto &number) { in_a_ = number; });
@@ -35,12 +33,7 @@ void SimpleCmp::evaluate()
 
 void SimpleCmp::setResult(const bool res)
 {
-    if (result_ != res)
-    {
-        result_slot_->setValue(res);
-        result_ = res;
-        res ? true_slot_->setValue() : false_slot_->setValue();
-    }
+    result_slot_->setValue(res);
 }
 
 SimpleCmp::~SimpleCmp()

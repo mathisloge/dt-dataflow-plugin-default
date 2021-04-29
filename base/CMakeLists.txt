@@ -9,6 +9,7 @@ set(SOURCES
     src/nodes/simple_ops.cpp
     src/nodes/simple_cmp.cpp
     src/nodes/simple_cmps.cpp
+    src/nodes/branch_node.cpp
 )
 corrade_add_plugin(BasePlugin 
     "${DTDF_PLUGIN_INSTALL_DBG_DIR}"

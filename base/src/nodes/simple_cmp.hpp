@@ -40,10 +40,7 @@ class SimpleCmp : public core::BaseNode
 
     NumberT in_a_;
     NumberT in_b_;
-    bool result_;
 
     std::shared_ptr<ResultSlotT> result_slot_;
-    std::shared_ptr<FlowSlotT> true_slot_;
-    std::shared_ptr<FlowSlotT> false_slot_;
 };
 } // namespace dt::df::cmp

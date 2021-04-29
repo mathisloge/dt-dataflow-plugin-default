@@ -1,30 +1,28 @@
 #pragma once
 #include <array>
-#include <dt/df/core/any_slot.hpp>
 #include <dt/df/core/base_node.hpp>
-#include <dt/df/core/number_slot.hpp>
+#include <dt/df/core/flow_base_slot.hpp>
+#include "../slots/basic_slots.hpp"
 #include <imgui.h>
 namespace dt::df
 {
-class BranchNode final : public BaseNode
+class BranchNode final : public core::BaseNode
 {
   public:
     static constexpr const char *kKey = "BranchNode";
     static constexpr const char *kName = "Branch";
 
   public:
-    BranchNode(IGraphManager &graph_manager);
-    BranchNode(IGraphManager &graph_manager, const nlohmann::json &json);
+    explicit BranchNode(core::IGraphManager &graph_manager);
+    void init(core::IGraphManager &graph_manager) override;
 
   private:
-    void initSlots();
-    void calculate() override;
+    void evaluate() override;
     void setOutput(const bool result);
 
   private:
-    std::shared_ptr<NumberSlot> input_expr_;
-    std::shared_ptr<AnySlot> input_if_;
-    std::shared_ptr<AnySlot> input_else_;
-    std::shared_ptr<AnySlot> result_;
+    std::shared_ptr<core::FlowBaseSlot> true_out_flow_;
+    std::shared_ptr<core::FlowBaseSlot> false_out_flow_;
+    bool input_cond_;
 };
 } // namespace dt::df
