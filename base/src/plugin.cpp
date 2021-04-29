@@ -37,11 +37,11 @@ void registerNode(core::IGraphManager &graph, const std::string &group)
             return /*std::make_shared<TNode>(graph, json);*/ nullptr;
         });
 }
-class DefaultPlugin final : public Plugin
+class BasePlugin final : public Plugin
 {
 
   public:
-    explicit DefaultPlugin(Corrade::PluginManager::AbstractManager &manager, const std::string &plugin)
+    explicit BasePlugin(Corrade::PluginManager::AbstractManager &manager, const std::string &plugin)
         : Plugin{manager, plugin}
     {}
 
@@ -88,4 +88,4 @@ class DefaultPlugin final : public Plugin
 };
 } // namespace dt::df::plugin
 
-CORRADE_PLUGIN_REGISTER(DefaultPlugin, dt::df::plugin::DefaultPlugin, "de.mathisloge.dt.dataflow/1.0")
+CORRADE_PLUGIN_REGISTER(BasePlugin, dt::df::plugin::BasePlugin, "de.mathisloge.dt.dataflow/1.0")
