@@ -2,8 +2,9 @@
 #include <array>
 #include <dt/df/core/base_node.hpp>
 #include <dt/df/core/flow_base_slot.hpp>
-#include "../slots/basic_slots.hpp"
+#include <dt/df/core/types.hpp>
 #include <imgui.h>
+#include "../slots/basic_slots.hpp"
 namespace dt::df
 {
 class BranchNode final : public core::BaseNode
@@ -21,8 +22,8 @@ class BranchNode final : public core::BaseNode
     void setOutput(const bool result);
 
   private:
-    std::shared_ptr<core::FlowBaseSlot> true_out_flow_;
-    std::shared_ptr<core::FlowBaseSlot> false_out_flow_;
+    SlotFlowPtr true_out_flow_;
+    SlotFlowPtr false_out_flow_;
     bool input_cond_;
 };
 } // namespace dt::df
