@@ -6,7 +6,6 @@
 #include "nodes/io_ctx_node.hpp"
 namespace dt::df::plugin
 {
-
 class AsioPlugin final : public Plugin
 {
 
@@ -15,19 +14,19 @@ class AsioPlugin final : public Plugin
         : Plugin{manager, plugin}
     {}
 
-    void setup(Magnum::GL::Context &gl_ctx, ImGuiContext *imgui_ctx, imnodes::Context *imnodes_ctx)
+    void setup(Magnum::GL::Context &gl_ctx, ImGuiContext *imgui_ctx, imnodes::Context *imnodes_ctx) override
     {
         Magnum::Platform::GLContext::makeCurrent(&gl_ctx);
         ImGui::SetCurrentContext(imgui_ctx);
         imnodes::SetCurrentContext(imnodes_ctx);
     }
-    void registerNodeFactories(core::IGraphManager &graph)
+    void registerNodeFactories(core::IGraphManager &graph) override
     {
         registerNode<IoCtxNode>(graph, "asio/");
     }
-    void registerSlotFactories(core::IGraphManager &graph)
+    void registerSlotFactories(core::IGraphManager &graph) override
     {
-        registerBaseSlot<boost::asio::io_context &>(graph, "AsioIoContext");
+        registerBaseSlot<std::shared_ptr<boost::asio::io_context>>(graph, "AsioIoContext");
     }
 };
 } // namespace dt::df::plugin

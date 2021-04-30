@@ -4,7 +4,7 @@
 namespace dt::df
 {
 IntOutputNode::IntOutputNode(core::IGraphManager &graph_manager)
-    : SimpleOutputNode(graph_manager, std::string{kKey}, "Int Output", kNumberSlotKey)
+    : SimpleOutputNode(graph_manager, std::string{kKey}, "Int Output", std::string{kNumberSlotKey})
 {}
 
 void IntOutputNode::renderCustomContent()
@@ -15,7 +15,7 @@ void IntOutputNode::renderCustomContent()
 }
 
 FloatOutputNode::FloatOutputNode(core::IGraphManager &graph_manager)
-    : SimpleOutputNode(graph_manager, std::string{kKey}, "Float Output", kNumberSlotKey)
+    : SimpleOutputNode(graph_manager, std::string{kKey}, "Float Output", std::string{kNumberSlotKey})
 {}
 
 void FloatOutputNode::renderCustomContent()
@@ -26,7 +26,7 @@ void FloatOutputNode::renderCustomContent()
 }
 
 StringOutputNode::StringOutputNode(core::IGraphManager &graph_manager)
-    : SimpleOutputNode(graph_manager, std::string{kKey}, "String Output", kStringSlotKey)
+    : SimpleOutputNode(graph_manager, std::string{kKey}, "String Output", std::string{kStringSlotKey})
 {}
 
 void StringOutputNode::renderCustomContent()

@@ -19,7 +19,7 @@ template <typename TSlot>
 void registerSlot(core::IGraphManager &graph)
 {
     graph.registerSlotFactory(
-        TSlot::kKey,
+        std::string{TSlot::kKey},
         [](core::IGraphManager &graph, SlotType type, const SlotName &name, SlotId local, SlotFieldVisibility vis) {
             return std::make_shared<TSlot>(graph, type, name, local);
         },
@@ -34,13 +34,13 @@ class BasePlugin final : public Plugin
         : Plugin{manager, plugin}
     {}
 
-    void setup(Magnum::GL::Context &gl_ctx, ImGuiContext *imgui_ctx, imnodes::Context *imnodes_ctx)
+    void setup(Magnum::GL::Context &gl_ctx, ImGuiContext *imgui_ctx, imnodes::Context *imnodes_ctx) override
     {
         Magnum::Platform::GLContext::makeCurrent(&gl_ctx);
         ImGui::SetCurrentContext(imgui_ctx);
         imnodes::SetCurrentContext(imnodes_ctx);
     }
-    void registerNodeFactories(core::IGraphManager &graph)
+    void registerNodeFactories(core::IGraphManager &graph) override
     {
         registerSimpleOutputNode<IntOutputNode>(graph);
         registerSimpleOutputNode<FloatOutputNode>(graph);
@@ -61,17 +61,17 @@ class BasePlugin final : public Plugin
         op::registerSimpleOpNode<op::Multiplication>(graph);
         op::registerSimpleOpNode<op::Pow>(graph);
 
-        //registerNode<TimerNode>(graph, "utilities/");
+        // registerNode<TimerNode>(graph, "utilities/");
         // registerNode<LedNode>(graph, "utilities/");
         // registerNode<ColorNode>(graph, "utilities/");
         registerNode<BranchNode>(graph, "operators/logical/");
         // registerNode<ArrayNode>(graph, "datatype/");
     }
-    void registerSlotFactories(core::IGraphManager &graph)
+    void registerSlotFactories(core::IGraphManager &graph) override
     {
-        registerBaseSlot<NumberSlotT>(graph, kNumberSlotKey);
-        registerBaseSlot<StringSlotT>(graph, kStringSlotKey);
-        registerBaseSlot<ByteArraySlotT>(graph, kByteArrayKey);
+        registerBaseSlot<NumberSlotT>(graph, std::string{kNumberSlotKey});
+        registerBaseSlot<StringSlotT>(graph, std::string{kStringSlotKey});
+        registerBaseSlot<ByteArraySlotT>(graph, std::string{kByteArrayKey});
         registerSlot<FlowSlot>(graph);
     }
 };

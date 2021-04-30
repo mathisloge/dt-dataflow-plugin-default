@@ -13,7 +13,7 @@ void BranchNode::init(core::IGraphManager &graph_manager)
 {
     addInputFlow(graph_manager);
 
-    std::static_pointer_cast<core::BaseSlot<NumberSlotT>>(addInput(graph_manager, kNumberSlotKey, "condition", 0))
+    std::static_pointer_cast<core::BaseSlot<NumberSlotT>>(addInput(graph_manager, std::string{kNumberSlotKey}, "condition", 0))
         ->connectToNodeFnc(
             [this](auto number) { std::visit([this](auto expr) { input_cond_ = static_cast<bool>(expr); }, number); });
 
